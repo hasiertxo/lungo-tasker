@@ -204,7 +204,7 @@
     TaskCtrl.prototype._initializeFields = function() {
       this.name.val("");
       this.description.val("");
-      this.list.val("Office");
+      this.list.val("");
       this.when.val("");
       return Lungo.Router.section("task");
     };
