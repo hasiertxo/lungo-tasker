@@ -53,7 +53,7 @@ class TaskCtrl extends Monocle.Controller
   _initializeFields: () ->
     @name.val ""
     @description.val ""
-    @list.val "office"
+    @list.val "Office"
     @when.val ""
     Lungo.Router.section "task"
 
