@@ -61,6 +61,7 @@
 
     function Task() {
       this.bindTaskUpdated = __bind(this.bindTaskUpdated, this);
+      this.onDelete = __bind(this.onDelete, this);
       Task.__super__.constructor.apply(this, arguments);
       __Model.Task.bind("update", this.bindTaskUpdated);
       this.append(this.model);
@@ -84,8 +85,27 @@
     };
 
     Task.prototype.onDelete = function(event) {
-      this.model.destroy();
-      return this.remove();
+      var _this = this;
+      return Lungo.Notification.confirm({
+        icon: "user",
+        title: "Delete",
+        description: "Confirm delete?",
+        accept: {
+          icon: "checkmark",
+          label: "Accept",
+          callback: function() {
+            _this.model.destroy();
+            return _this.remove();
+          }
+        },
+        cancel: {
+          icon: "close",
+          label: "Cancel",
+          callback: function() {
+            return _this;
+          }
+        }
+      });
     };
 
     Task.prototype.onView = function(event) {

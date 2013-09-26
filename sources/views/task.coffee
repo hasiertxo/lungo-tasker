@@ -26,9 +26,23 @@ class __View.Task extends Monocle.View
     @model.updateAttributes done: !@model.done
     @refresh()
 
-  onDelete: (event) ->
-    @model.destroy()
-    @remove()
+  onDelete: (event) =>
+    Lungo.Notification.confirm
+      icon: "user"
+      title: "Delete"
+      description: "Confirm delete?"
+      accept:
+        icon: "checkmark"
+        label: "Accept"
+        callback: =>
+          @model.destroy()
+          @remove()
+
+      cancel:
+        icon: "close"
+        label: "Cancel"
+        callback: =>
+          @
 
   onView: (event) ->
     __Controller.Task.show @model
