@@ -3,6 +3,8 @@
     "dependencies"  : {},
     "devDependencies"   : {
         "grunt-contrib-coffee"  : "*",
+        "grunt-contrib-concat"  : "*",
+        "grunt-contrib-uglify"  : "*",
         "grunt-contrib-watch"   : "*"
     },
     "engines"       : {"node": "*"}
