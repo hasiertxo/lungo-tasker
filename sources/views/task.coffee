@@ -11,6 +11,7 @@ class __View.Task extends Monocle.View
 
   constructor: ->
     super
+    __Model.Task.bind "update", @bindTaskUpdated
     @append @model
 
   events:
@@ -35,4 +36,14 @@ class __View.Task extends Monocle.View
   bindTaskUpdated: (task) =>
     if task.uid is @model.uid
       @model = task
-      @refresh()
+      destiny = null
+      if @container.selector is "article#normal ul" and @model.important is true
+        destiny = "high"
+      else if @container.selector is "article#high ul" and @model.important is false
+        destiny = "normal"
+
+      if destiny?
+        @remove()
+        @container = Monocle.Dom("article#" + destiny + " ul")
+        Monocle.Dom("article#" + destiny + " ul").append(@el)
+        @refresh()

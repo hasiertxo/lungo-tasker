@@ -48,6 +48,9 @@ class TaskCtrl extends Monocle.Controller
   _show: (@current) ->
     @name.val @current.name
     @description.val @current.description
+    @list.val @current.list
+    @when.val @current.when
+    @important.val @current.important
     Lungo.Router.section "task"
 
   _initializeFields: () ->

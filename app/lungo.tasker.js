@@ -62,6 +62,7 @@
     function Task() {
       this.bindTaskUpdated = __bind(this.bindTaskUpdated, this);
       Task.__super__.constructor.apply(this, arguments);
+      __Model.Task.bind("update", this.bindTaskUpdated);
       this.append(this.model);
     }
 
@@ -92,9 +93,21 @@
     };
 
     Task.prototype.bindTaskUpdated = function(task) {
+      var destiny;
       if (task.uid === this.model.uid) {
         this.model = task;
-        return this.refresh();
+        destiny = null;
+        if (this.container.selector === "article#normal ul" && this.model.important === true) {
+          destiny = "high";
+        } else if (this.container.selector === "article#high ul" && this.model.important === false) {
+          destiny = "normal";
+        }
+        if (destiny != null) {
+          this.remove();
+          this.container = Monocle.Dom("article#" + destiny + " ul");
+          Monocle.Dom("article#" + destiny + " ul").append(this.el);
+          return this.refresh();
+        }
       }
     };
 
@@ -162,6 +175,9 @@
       this.current = current;
       this.name.val(this.current.name);
       this.description.val(this.current.description);
+      this.list.val(this.current.list);
+      this.when.val(this.current.when);
+      this.important.val(this.current.important);
       return Lungo.Router.section("task");
     };
 
@@ -208,6 +224,7 @@
       TasksCtrl.__super__.constructor.apply(this, arguments);
       __Model.Task.bind("create", this.bindTaskCreated);
       __Model.Task.bind("update", this.bindTaskUpdated);
+      __Model.Task.bind("destroy", this.updateCounters);
     }
 
     TasksCtrl.prototype.onNew = function(event) {

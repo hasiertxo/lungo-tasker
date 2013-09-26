@@ -10,8 +10,9 @@ class __Controller.TasksCtrl extends Monocle.Controller
 
     constructor: ->
       super
-      __Model.Task.bind "create", @bindTaskCreated
-      __Model.Task.bind "update", @bindTaskUpdated
+      __Model.Task.bind "create",   @bindTaskCreated
+      __Model.Task.bind "update",   @bindTaskUpdated
+      __Model.Task.bind "destroy",  @updateCounters
 
     onNew: (event) ->
       __Controller.Task.new()
